@@ -26,6 +26,8 @@ Unblock-File -Path $destination
 # 6. Import the module silently
 Import-Module $destination -Force
 
+### OR ###
+
 
 Import-Module .\SPToolbox.psm1
 Get-SPTool               # list tools with descriptions
