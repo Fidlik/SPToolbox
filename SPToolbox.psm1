@@ -21,14 +21,14 @@ $Script:Tools = @(
         FileName    = "ULSViewer.zip"
         OfficialUri = "https://download.microsoft.com/download/0/7/0/0707d73f-7473-4c6e-aafa-bc69d80dfe39/ULSViewer.zip"
         InternalUri = "\\fileserver\Share\ULSViewer.zip"
-        Description = "Tails and filters SharePoint's Unified Logging Service logs live—letting you hunt for correlation IDs and narrow in on specific services, categories and severities."
+        Description = "Tails and filters SharePoint's Unified Logging Service logs live-letting you hunt for correlation IDs and narrow in on specific services, categories and severities."
     }
     [PSCustomObject]@{
         Name        = "Fiddler"
         FileName    = "FiddlerSetup.exe"
         OfficialUri = "https://telerik-fiddler.s3.amazonaws.com/fiddler/FiddlerSetup.exe"
         InternalUri = "\\fileserver\Share\FiddlerSetup.exe"
-        Description = "Intercepts and inspects HTTP/S traffic between clients and your SharePoint Web Front Ends—ideal for debugging REST/OData calls, cookies, redirects and auth flows."
+        Description = "Intercepts and inspects HTTP/S traffic between clients and your SharePoint Web Front Ends-ideal for debugging REST/OData calls, cookies, redirects and auth flows."
     }
     [PSCustomObject]@{
         Name        = "Log Parser"
@@ -42,7 +42,7 @@ $Script:Tools = @(
         FileName    = "SQLProfiler.msi"
         OfficialUri = "https://download.microsoft.com/download/2/5/2/25233c1c-1f6b-4e77-bf1e-d875c9d9e1bc/SqlProfiler.msi"
         InternalUri = "\\fileserver\Share\SqlProfiler.msi"
-        Description = "Traces T-SQL calls from SharePoint into your content databases—helpful when diagnosing locking, blocking or tracking down an expensive query."
+        Description = "Traces T-SQL calls from SharePoint into your content databases-helpful when diagnosing locking, blocking or tracking down an expensive query."
     }
     [PSCustomObject]@{
         Name        = "Performance Monitor"
@@ -77,14 +77,14 @@ $Script:Tools = @(
         FileName    = "SPM.zip"
         OfficialUri = $null
         InternalUri = $null
-        Description = "Tree-view tool for browsing the entire SharePoint configuration database—including hidden properties on Service Applications, Web Applications, Sites and Features."
+        Description = "Tree-view tool for browsing the entire SharePoint configuration database-including hidden properties on Service Applications, Web Applications, Sites and Features."
     }
     [PSCustomObject]@{
         Name        = "PnP PowerShell"
         FileName    = "PnP.PowerShell.msi"
         OfficialUri = "https://github.com/pnp/powershell/releases/latest/download/PnP.PowerShell.msi"
         InternalUri = "\\fileserver\Share\PnP.PowerShell.msi"
-        Description = "Community-driven cmdlets that complement the out-of-the-box SharePoint module—great for bulk site provisioning, template extraction and cross-farm operations."
+        Description = "Community-driven cmdlets that complement the out-of-the-box SharePoint module-great for bulk site provisioning, template extraction and cross-farm operations."
     }
     [PSCustomObject]@{
         Name        = "SPDocKit"
@@ -113,7 +113,7 @@ $Script:Tools = @(
         FileName    = "ResourceMonitor"
         OfficialUri = $null
         InternalUri = $null
-        Description = "Windows' built-in utilities for quick checks on CPU, RAM, disk and network per process—useful for at-a-glance health checks."
+        Description = "Windows' built-in utilities for quick checks on CPU, RAM, disk and network per process-useful for at-a-glance health checks."
     }
 )
 
