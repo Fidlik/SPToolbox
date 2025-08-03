@@ -21,7 +21,7 @@ $Script:Tools = @(
         FileName    = "ULSViewer.zip"
         OfficialUri = "https://download.microsoft.com/download/0/7/0/0707d73f-7473-4c6e-aafa-bc69d80dfe39/ULSViewer.zip"
         InternalUri = "\\fileserver\Share\ULSViewer.zip"
-        Description = "Tails and filters SharePoint’s Unified Logging Service logs live—letting you hunt for correlation IDs and narrow in on specific services, categories and severities."
+        Description = "Tails and filters SharePoint's Unified Logging Service logs live—letting you hunt for correlation IDs and narrow in on specific services, categories and severities."
     }
     [PSCustomObject]@{
         Name        = "Fiddler"
@@ -63,7 +63,7 @@ $Script:Tools = @(
         FileName    = "SPDiagSetup.msi"
         OfficialUri = $null
         InternalUri = $null
-        Description = "Microsoft’s diagnostic framework for gathering configuration snapshots, ULS and PerfMon data, health reports and auto-analysis in one package."
+        Description = "Microsoft's diagnostic framework for gathering configuration snapshots, ULS and PerfMon data, health reports and auto-analysis in one package."
     }
     [PSCustomObject]@{
         Name        = "SharePoint Log Viewer (SPLogViewer)"
@@ -113,7 +113,7 @@ $Script:Tools = @(
         FileName    = "ResourceMonitor"
         OfficialUri = $null
         InternalUri = $null
-        Description = "Windows’ built-in utilities for quick checks on CPU, RAM, disk and network per process—useful for at-a-glance health checks."
+        Description = "Windows' built-in utilities for quick checks on CPU, RAM, disk and network per process—useful for at-a-glance health checks."
     }
 )
 
