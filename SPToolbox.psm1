@@ -18,7 +18,7 @@ $Script:Tools = @(
         Name        = "ULS Viewer"
         FileName    = "ULSViewer.zip"
         Uri         = "https://download.microsoft.com/download/0/7/0/0707d73f-7473-4c6e-aafa-bc69d80dfe39/ULSViewer.zip"
-        Description = "Tails and filters SharePoint’s Unified Logging Service logs live—letting you hunt for correlation IDs and narrow in on specific services, categories and severities."
+        Description = "Tails and filters SharePoint's Unified Logging Service logs live—letting you hunt for correlation IDs and narrow in on specific services, categories and severities."
     }
     [PSCustomObject]@{
         Name        = "Fiddler"
@@ -54,7 +54,7 @@ $Script:Tools = @(
         Name        = "SPDiag (SPDiagnosticStudio)"
         FileName    = "SPDiagSetup.msi"
         Uri         = $null
-        Description = "Microsoft’s diagnostic framework for gathering configuration snapshots, ULS and PerfMon data, health reports and auto-analysis in one package."
+        Description = "Microsoft's diagnostic framework for gathering configuration snapshots, ULS and PerfMon data, health reports and auto-analysis in one package."
     }
     [PSCustomObject]@{
         Name        = "SharePoint Log Viewer (SPLogViewer)"
