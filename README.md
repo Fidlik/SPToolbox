@@ -9,9 +9,11 @@ A personal collection of PowerShell scripts, admin utilities, and automation sni
 ```powershell
 Import-Module .\SPToolbox.psm1
 Get-SPTool               # list tools with descriptions
+
 Get-SPTool "Procmon" -Download               # download specific tool
 Get-SPTool "Procmon" -Download -Source Internal  # fetch from internal share
 Get-SPTool -DownloadAll -Source Official      # fetch everything from official sources
+ main
 ```
 
 By default, downloads are placed in a `Downloads` folder next to the module file. Override this location with the `-Destination` parameter.
