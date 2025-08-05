@@ -3,8 +3,8 @@
     Usage:
         Import-Module .\SPToolbox.psm1   # if saved as module
         Get-SPTool                       # list available tools
-        Get-SPTool "Procmon" -Download   # download specific tool
-        Get-SPTool -DownloadAll          # download everything
+        Get-SPTool -Name 'Procmon','ULS Viewer' -Download   # download specific tools
+        Get-SPTool -DownloadAll                          # download everything
 #>
 
 $Script:Tools = @(
@@ -121,7 +121,7 @@ function Get-SPTool {
     [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
         [Parameter(Position = 0, ParameterSetName = 'Single')]
-        [string] $Name,
+        [string[]] $Name,
 
         [Parameter(ParameterSetName = 'Single')]
         [switch] $Download,
@@ -182,22 +182,24 @@ function Get-SPTool {
         return
     }
 
-    # Single tool download
-    $tool = $Tools | Where-Object { $_.Name -like "*$Name*" }
-    if (-not $tool) {
-        Write-Error "Tool '$Name' not found."
-        return
-    }
-    $uri = if ($Source -eq 'Internal') { $tool.InternalUri } else { $tool.OfficialUri }
-    if (-not $uri) {
-        Write-Warning "No '$Source' URI defined for $($tool.Name)."
-        return
-    }
-    $path = Join-Path $Destination $tool.FileName
-    try {
-        Invoke-WebRequest -Uri $uri -OutFile $path -ErrorAction Stop
-        Write-Host "Downloaded $($tool.Name) to $path"
-    } catch {
-        Write-Error "Failed to download $($tool.Name): $($_.Exception.Message)"
+    # Download specific tools
+    foreach ($toolName in $Name) {
+        $tool = $Tools | Where-Object { $_.Name -like "*$toolName*" }
+        if (-not $tool) {
+            Write-Error "Tool '$toolName' not found."
+            continue
+        }
+        $uri = if ($Source -eq 'Internal') { $tool.InternalUri } else { $tool.OfficialUri }
+        if (-not $uri) {
+            Write-Warning "No '$Source' URI defined for $($tool.Name)."
+            continue
+        }
+        $path = Join-Path $Destination $tool.FileName
+        try {
+            Invoke-WebRequest -Uri $uri -OutFile $path -ErrorAction Stop
+            Write-Host "Downloaded $($tool.Name) to $path"
+        } catch {
+            Write-Error "Failed to download $($tool.Name): $($_.Exception.Message)"
+        }
     }
 }

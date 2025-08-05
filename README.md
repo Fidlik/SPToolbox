@@ -30,8 +30,8 @@ Import-Module $destination -Force
 
 Get-SPTool               # list tools with descriptions
 
-Get-SPTool "Procmon" -Download               # download specific tool
-Get-SPTool -DownloadAll -Source Official      # fetch everything from official sources
-Get-SPTool "Procmon" -Download -Source Internal  # fetch from internal source
+Get-SPTool -Name 'Procmon','ULS Viewer' -Download    # download specific tools
+Get-SPTool -DownloadAll -Source Official             # fetch everything from official sources
+Get-SPTool -Name 'Procmon' -Download -Source Internal  # fetch from internal source
 
 By default, downloads are placed in a "E:\SpToolbox\". Override this location with the `-Destination` parameter.
