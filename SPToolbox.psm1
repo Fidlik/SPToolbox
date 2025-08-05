@@ -133,7 +133,7 @@ function Get-SPTool {
         [Parameter(ParameterSetName = 'All')]
         [ValidateSet('Official','Internal')]
         [string] $Source = 'Official',
-        [string] $Destination = (Join-Path $PSScriptRoot 'Downloads')
+        [string] $Destination = 'E:\SpToolbox\'
     )
 
     if ($PSCmdlet.ParameterSetName -eq 'List') {
