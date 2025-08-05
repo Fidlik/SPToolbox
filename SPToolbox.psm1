@@ -3,7 +3,7 @@
     Usage:
         Import-Module .\SPToolbox.psm1   # if saved as module
         Get-SPTool                       # list available tools
-        Get-SPTool -Name 'Procmon','ULS Viewer' -Download   # download specific tools
+        Get-SPTool -Name 'Procmon','ULS Viewer'    # download specific tools
         Get-SPTool -DownloadAll                          # download everything
 #>
 
@@ -122,10 +122,6 @@ function Get-SPTool {
     param(
         [Parameter(Position = 0, ParameterSetName = 'Single')]
         [string[]] $Name,
-
-        [Parameter(ParameterSetName = 'Single')]
-        [switch] $Download,
-
         [Parameter(ParameterSetName = 'All')]
         [switch] $DownloadAll,
 
