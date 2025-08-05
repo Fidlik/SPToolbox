@@ -148,11 +148,26 @@ function Get-SPTool {
         Write-Host "Drive '$driveRoot' not found."
         $available = (Get-PSDrive -PSProvider FileSystem).Name -join ', '
         Write-Host "Available drives: $available"
-        $letter = Read-Host "Enter a valid drive letter for the toolbox (e.g. D or C)"
-        if ($letter -match '^[A-Za-z]$') {
-            $Destination = "${($letter.ToUpper())}:\SpToolbox\"
-        } else {
-            $Destination = Read-Host "Enter full path for the toolbox (including trailing backslash)"
+
+        $maxAttempts = 3
+        for ($i = 0; $i -lt $maxAttempts; $i++) {
+            $prompt = "Enter the drive letter for the toolbox (use -Destination for a full path)"
+            $letter = Read-Host $prompt
+
+            if ($letter -notmatch '^[A-Za-z]$') {
+                Write-Host "Please enter a single drive letter (e.g. C or D)."
+            } else {
+                $driveCandidate = "${($letter.ToUpper())}:\"
+                if (Test-Path $driveCandidate) {
+                    $Destination = "${driveCandidate}SpToolbox\"
+                    break
+                }
+                Write-Host "Drive '$driveCandidate' does not exist."
+            }
+
+            if ($i -eq $maxAttempts - 1) {
+                throw "Valid drive not specified."
+            }
         }
     }
 
