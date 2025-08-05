@@ -150,7 +150,12 @@ function Get-SPTool {
             $uri = if ($Source -eq 'Internal') { $tool.InternalUri } else { $tool.OfficialUri }
             if ($null -ne $uri) {
                 $path = Join-Path $Destination $tool.FileName
-                Invoke-WebRequest -Uri $uri -OutFile $path
+                try {
+                    Invoke-WebRequest -Uri $uri -OutFile $path -ErrorAction Stop
+                }
+                catch {
+                    Write-Error "Failed to download $($tool.Name) from $Source source: $($_.Exception.Message)"
+                }
             }
         }
         Write-Host "All downloadable tools fetched to $Destination from $Source source"
@@ -162,8 +167,13 @@ function Get-SPTool {
         $uri = if ($Source -eq 'Internal') { $tool.InternalUri } else { $tool.OfficialUri }
         if ($null -ne $uri) {
             $path = Join-Path $Destination $tool.FileName
-            Invoke-WebRequest -Uri $uri -OutFile $path
-            Write-Host "Downloaded $($tool.Name) from $Source source to $path"
+            try {
+                Invoke-WebRequest -Uri $uri -OutFile $path -ErrorAction Stop
+                Write-Host "Downloaded $($tool.Name) from $Source source to $path"
+            }
+            catch {
+                Write-Error "Failed to download $($tool.Name) from $Source source: $($_.Exception.Message)"
+            }
         } else {
             Write-Warning "$($tool.Name) has no $Source source defined."
         }
