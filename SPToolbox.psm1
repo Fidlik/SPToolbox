@@ -19,7 +19,7 @@ $Script:Tools = @(
     [PSCustomObject]@{
         Name        = "ULS Viewer"
         FileName    = "ULSViewer.zip"
-        OfficialUri = "https://download.microsoft.com/download/0/7/0/0707d73f-7473-4c6e-aafa-bc69d80dfe39/ULSViewer.zip"
+        OfficialUri = "https://download.microsoft.com/download/f/1/7/f17e2780-9456-479a-8faa-803cebf74b6a/ulsviewer.zip"
         InternalUri = "\\fileserver\Share\ULSViewer.zip"
         Description = "Tails and filters SharePoint's Unified Logging Service logs live-letting you hunt for correlation IDs and narrow in on specific services, categories and severities."
     }
