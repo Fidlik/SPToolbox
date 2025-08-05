@@ -202,7 +202,7 @@ function Get-SPTool {
             $zipPath = Join-Path $Destination $zipFileName
         
             # Gather all new folders since $startTime
-            $foldersToZip = Get-ChildItem -Path $Destination -Directory |
+            $foldersToZip = Get-ChildItem -Path $Destination  |
                 Where-Object { $_.CreationTime -ge $startTime }
         
             if ($foldersToZip) {
@@ -243,7 +243,7 @@ function Get-SPTool {
         $zipPath = Join-Path $Destination $zipFileName
     
         # Gather all new folders since $startTime
-        $foldersToZip = Get-ChildItem -Path $Destination -Directory |
+        $foldersToZip = Get-ChildItem -Path $Destination  |
             Where-Object { $_.CreationTime -ge $startTime }
     
         if ($foldersToZip) {
