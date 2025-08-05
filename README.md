@@ -25,17 +25,13 @@ Unblock-File -Path $destination
 
 # 6. Import the module silently
 Import-Module $destination -Force
+#Import-Module .\SPToolbox.psm1
 
-### OR ###
 
-
-Import-Module .\SPToolbox.psm1
 Get-SPTool               # list tools with descriptions
 
 Get-SPTool "Procmon" -Download               # download specific tool
-Get-SPTool "Procmon" -Download -Source Internal  # fetch from internal share
 Get-SPTool -DownloadAll -Source Official      # fetch everything from official sources
- main
-```
+Get-SPTool "Procmon" -Download -Source Internal  # fetch from internal source
 
-By default, downloads are placed in a `Downloads` folder next to the module file. Override this location with the `-Destination` parameter.
+By default, downloads are placed in a "E:\SpToolBo" folder next to the module file. Override this location with the `-Destination` parameter.
