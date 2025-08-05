@@ -151,20 +151,19 @@ function Get-SPTool {
 
         $maxAttempts = 3
         for ($i = 0; $i -lt $maxAttempts; $i++) {
-            $prompt = "Enter the drive letter for the toolbox (use -Destination for a full path)"
-            $letter = (Read-Host $prompt).Trim().TrimEnd(':')
-
+            $letter = (Read-Host -Prompt "Enter the drive letter for the toolbox (use -Destination for a full path)").Trim().TrimEnd(':')
+    
             if ($letter -notmatch '^[A-Za-z]$') {
                 Write-Host "Please enter a single drive letter (e.g. C or D)."
             } else {
-                $driveCandidate = "${($letter.ToUpper())}:\"
+                $driveCandidate = "$($letter.ToUpper()):\\"
                 if (Test-Path $driveCandidate) {
-                    $Destination = "${driveCandidate}SpToolbox\"
+                    $Destination = Join-Path $driveCandidate 'SpToolbox'
                     break
                 }
                 Write-Host "Drive '$driveCandidate' does not exist."
             }
-
+    
             if ($i -eq $maxAttempts - 1) {
                 throw "Valid drive not specified."
             }
