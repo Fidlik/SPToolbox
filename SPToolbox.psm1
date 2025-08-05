@@ -133,62 +133,71 @@ function Get-SPTool {
         [Parameter(ParameterSetName = 'All')]
         [ValidateSet('Official','Internal')]
         [string] $Source = 'Official',
-        [string] $Destination = 'E:\SpToolbox\'
-         $defaultRoot = Split-Path -Path $Destination -Qualifier
-         if (-not (Test-Path $defaultRoot)) {
-            Write-Host "Drive $defaultRoot not found."
-            $letter = Read-Host "Please enter a drive letter to use for the toolbox (e.g. D or C)"
-            if ($letter -match '^[A-Za-z]$') {
-                $Destination = "$($letter.ToUpper()):\SpToolbox\"
-            } else {
-                $Destination = Read-Host "Enter full destination path (including trailing backslash)"
-            }
-         }
 
+        [string] $Destination = 'E:\SpToolbox\'
     )
 
+    # If just listing, skip drive/directory checks
     if ($PSCmdlet.ParameterSetName -eq 'List') {
         return $Tools | Select-Object Name, Description, OfficialUri, InternalUri
-
     }
 
+    # Validate target drive exists before attempting downloads
+    $driveRoot = Split-Path -Path $Destination -Qualifier
+    if (-not (Test-Path $driveRoot)) {
+        Write-Host "Drive '$driveRoot' not found."
+        $available = (Get-PSDrive -PSProvider FileSystem).Name -join ', '
+        Write-Host "Available drives: $available"
+        $letter = Read-Host "Enter a valid drive letter for the toolbox (e.g. D or C)"
+        if ($letter -match '^[A-Za-z]$') {
+            $Destination = "${($letter.ToUpper())}:\SpToolbox\"
+        } else {
+            $Destination = Read-Host "Enter full path for the toolbox (including trailing backslash)"
+        }
+    }
+
+    # Ensure the destination folder exists
     if (-not (Test-Path $Destination)) {
-        New-Item -ItemType Directory -Path $Destination | Out-Null
+        try {
+            New-Item -Path $Destination -ItemType Directory -Force -ErrorAction Stop | Out-Null
+        } catch {
+            Write-Error "Failed to create destination folder '$Destination': $($_.Exception.Message)"
+            return
+        }
     }
 
     if ($DownloadAll) {
         foreach ($tool in $Tools) {
             $uri = if ($Source -eq 'Internal') { $tool.InternalUri } else { $tool.OfficialUri }
-            if ($null -ne $uri) {
+            if ($uri) {
                 $path = Join-Path $Destination $tool.FileName
                 try {
                     Invoke-WebRequest -Uri $uri -OutFile $path -ErrorAction Stop
-                }
-                catch {
-                    Write-Error "Failed to download $($tool.Name) from $Source source: $($_.Exception.Message)"
+                } catch {
+                    Write-Warning "Could not download $($tool.Name): $($_.Exception.Message)"
                 }
             }
         }
-        Write-Host "All downloadable tools fetched to $Destination from $Source source"
+        Write-Host "Downloaded all tools to $Destination from '$Source' source."
         return
     }
 
+    # Single tool download
     $tool = $Tools | Where-Object { $_.Name -like "*$Name*" }
-    if ($tool) {
-        $uri = if ($Source -eq 'Internal') { $tool.InternalUri } else { $tool.OfficialUri }
-        if ($null -ne $uri) {
-            $path = Join-Path $Destination $tool.FileName
-            try {
-                Invoke-WebRequest -Uri $uri -OutFile $path -ErrorAction Stop
-                Write-Host "Downloaded $($tool.Name) from $Source source to $path"
-            }
-            catch {
-                Write-Error "Failed to download $($tool.Name) from $Source source: $($_.Exception.Message)"
-            }
-        } else {
-            Write-Warning "$($tool.Name) has no $Source source defined."
-        }
-    } else {
+    if (-not $tool) {
         Write-Error "Tool '$Name' not found."
+        return
+    }
+    $uri = if ($Source -eq 'Internal') { $tool.InternalUri } else { $tool.OfficialUri }
+    if (-not $uri) {
+        Write-Warning "No '$Source' URI defined for $($tool.Name)."
+        return
+    }
+    $path = Join-Path $Destination $tool.FileName
+    try {
+        Invoke-WebRequest -Uri $uri -OutFile $path -ErrorAction Stop
+        Write-Host "Downloaded $($tool.Name) to $path"
+    } catch {
+        Write-Error "Failed to download $($tool.Name): $($_.Exception.Message)"
     }
 }
