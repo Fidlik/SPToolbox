@@ -197,12 +197,20 @@ function Get-SPTool {
         }
         Write-Host "Downloaded all tools to $Destination from '$Source' source."
         if ($Zip) {
-            Get-ChildItem -Path $Destination -Directory |
-                Where-Object { $_.CreationTime -ge $startTime } |
-                ForEach-Object {
-                    $zipPath = "$($_.FullName).zip"
-                    Compress-Archive -Path $_.FullName -DestinationPath $zipPath -Force
-                }
+            $dateStamp = Get-Date -Format 'yyyyMMdd'
+            $zipFileName = "${dateStamp}_SPToolBox.zip"
+            $zipPath = Join-Path $Destination $zipFileName
+        
+            # Gather all new folders since $startTime
+            $foldersToZip = Get-ChildItem -Path $Destination -Directory |
+                Where-Object { $_.CreationTime -ge $startTime }
+        
+            if ($foldersToZip) {
+                Compress-Archive -Path $foldersToZip.FullName -DestinationPath $zipPath -Force
+                Write-Host "Zipped downloaded tools into: $zipPath"
+            } else {
+                Write-Host "No new tools were downloaded. Skipping zip creation."
+            }
         }
         return
     }
@@ -230,11 +238,19 @@ function Get-SPTool {
     }
 
     if ($Zip) {
-        Get-ChildItem -Path $Destination -Directory |
-            Where-Object { $_.CreationTime -ge $startTime } |
-            ForEach-Object {
-                $zipPath = "$($_.FullName).zip"
-                Compress-Archive -Path $_.FullName -DestinationPath $zipPath -Force
-            }
+        $dateStamp = Get-Date -Format 'yyyyMMdd'
+        $zipFileName = "${dateStamp}_SPToolBox.zip"
+        $zipPath = Join-Path $Destination $zipFileName
+    
+        # Gather all new folders since $startTime
+        $foldersToZip = Get-ChildItem -Path $Destination -Directory |
+            Where-Object { $_.CreationTime -ge $startTime }
+    
+        if ($foldersToZip) {
+            Compress-Archive -Path $foldersToZip.FullName -DestinationPath $zipPath -Force
+            Write-Host "Zipped downloaded tools into: $zipPath"
+        } else {
+            Write-Host "No new tools were downloaded. Skipping zip creation."
+        }
     }
 }
