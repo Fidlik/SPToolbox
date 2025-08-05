@@ -215,7 +215,7 @@ function Get-SPTool {
             Write-Host "Downloaded $($tool.Name) to $path"
         } catch {
             # Write-Error "Failed to download $($tool.Name): $($_.Exception.Message)" #Commented out to simplify error output; detailed messages not needed here.
-            Write-Error "Failed to download $($tool.Name): Please check the source URL."
+            Write-Warning "Failed to download $($tool.Name): Please check the source URL."
         }
     }
 }
