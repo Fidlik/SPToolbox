@@ -130,8 +130,14 @@ function Get-SPTool {
         [ValidateSet('Official','Internal')]
         [string] $Source = 'Official',
 
+        [Parameter(ParameterSetName = 'Single')]
+        [Parameter(ParameterSetName = 'All')]
+        [switch] $Zip,
+
         [string] $Destination = 'E:\SpToolbox\'
     )
+
+    $startTime = Get-Date
 
     # If just listing, skip drive/directory checks
     if ($PSCmdlet.ParameterSetName -eq 'List') {
@@ -190,6 +196,14 @@ function Get-SPTool {
             }
         }
         Write-Host "Downloaded all tools to $Destination from '$Source' source."
+        if ($Zip) {
+            Get-ChildItem -Path $Destination -Directory |
+                Where-Object { $_.CreationTime -ge $startTime } |
+                ForEach-Object {
+                    $zipPath = "$($_.FullName).zip"
+                    Compress-Archive -Path $_.FullName -DestinationPath $zipPath -Force
+                }
+        }
         return
     }
 
@@ -213,5 +227,14 @@ function Get-SPTool {
             # Write-Error "Failed to download $($tool.Name): $($_.Exception.Message)" #Commented out to simplify error output; detailed messages not needed here.
             Write-Warning "Failed to download $($tool.Name): Please check the source URL."
         }
+    }
+
+    if ($Zip) {
+        Get-ChildItem -Path $Destination -Directory |
+            Where-Object { $_.CreationTime -ge $startTime } |
+            ForEach-Object {
+                $zipPath = "$($_.FullName).zip"
+                Compress-Archive -Path $_.FullName -DestinationPath $zipPath -Force
+            }
     }
 }
