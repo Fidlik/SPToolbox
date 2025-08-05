@@ -134,6 +134,17 @@ function Get-SPTool {
         [ValidateSet('Official','Internal')]
         [string] $Source = 'Official',
         [string] $Destination = 'E:\SpToolbox\'
+         $defaultRoot = Split-Path -Path $Destination -Qualifier
+         if (-not (Test-Path $defaultRoot)) {
+            Write-Host "Drive $defaultRoot not found."
+            $letter = Read-Host "Please enter a drive letter to use for the toolbox (e.g. D or C)"
+            if ($letter -match '^[A-Za-z]$') {
+                $Destination = "$($letter.ToUpper()):\SpToolbox\"
+            } else {
+                $Destination = Read-Host "Enter full destination path (including trailing backslash)"
+            }
+         }
+
     )
 
     if ($PSCmdlet.ParameterSetName -eq 'List') {
