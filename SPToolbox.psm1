@@ -235,22 +235,22 @@ function Get-SPTool {
             # Write-Error "Failed to download $($tool.Name): $($_.Exception.Message)" #Commented out to simplify error output; detailed messages not needed here.
             Write-Warning "Failed to download $($tool.Name): Please check the source URL."
         }
-    }
-
-    if ($Zip) {
-        $dateStamp = Get-Date -Format 'yyyyMMdd'
-        $zipFileName = "${dateStamp}_SPToolBox.zip"
-        $zipPath = Join-Path $Destination $zipFileName
-    
-        # Gather all new folders since $startTime
-        $foldersToZip = Get-ChildItem -Path $Destination  |
-            Where-Object { $_.CreationTime -ge $startTime }
-    
-        if ($foldersToZip) {
-            Compress-Archive -Path $foldersToZip.FullName -DestinationPath $zipPath -Force
-            Write-Host "Zipped downloaded tools into: $zipPath"
-        } else {
-            Write-Host "No new tools were downloaded. Skipping zip creation."
+        if ($Zip) {
+            $dateStamp = Get-Date -Format 'yyyyMMdd'
+            $zipFileName = "${dateStamp}_SPToolBox.zip"
+            $zipPath = Join-Path $Destination $zipFileName
+        
+            # Gather all new folders since $startTime
+            $foldersToZip = Get-ChildItem -Path $Destination  |
+                Where-Object { $_.CreationTime -ge $startTime }
+        
+            if ($foldersToZip) {
+                Compress-Archive -Path $foldersToZip.FullName -DestinationPath $zipPath -Force
+                Write-Host "Zipped downloaded tools into: $zipPath"
+            } else {
+                Write-Host "No new tools were downloaded. Skipping zip creation."
+            }
         }
     }
+   
 }
