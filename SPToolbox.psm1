@@ -188,7 +188,8 @@ function Get-SPTool {
                 try {
                     Invoke-WebRequest -Uri $uri -OutFile $path -ErrorAction Stop
                 } catch {
-                    Write-Warning "Could not download $($tool.Name): $($_.Exception.Message)"
+                    #Write-Warning "Could not download $($tool.Name): $($_.Exception.Message)"  #Commented out to simplify error output; detailed messages not needed here.
+                    Write-Warning "Could not download $($tool.Name), Please check the direct URL."
                 }
             }
         }
@@ -213,7 +214,8 @@ function Get-SPTool {
             Invoke-WebRequest -Uri $uri -OutFile $path -ErrorAction Stop
             Write-Host "Downloaded $($tool.Name) to $path"
         } catch {
-            Write-Error "Failed to download $($tool.Name): $($_.Exception.Message)"
+            # Write-Error "Failed to download $($tool.Name): $($_.Exception.Message)" #Commented out to simplify error output; detailed messages not needed here.
+            Write-Error "Failed to download $($tool.Name): Please check the destination path."
         }
     }
 }
