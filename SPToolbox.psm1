@@ -158,7 +158,7 @@ function Get-SPTool {
             if ($letter -notmatch '^[A-Za-z]$') {
                 Write-Host "Please enter a single drive letter (e.g. C or D)."
             } else {
-                $driveCandidate = "$($letter.ToUpper()):\\"
+                $driveCandidate = "$($letter.ToUpper()):\"
                 if (Test-Path $driveCandidate) {
                     $Destination = Join-Path $driveCandidate 'SpToolbox'
                     break
