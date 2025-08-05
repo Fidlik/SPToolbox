@@ -34,4 +34,4 @@ Get-SPTool "Procmon" -Download               # download specific tool
 Get-SPTool -DownloadAll -Source Official      # fetch everything from official sources
 Get-SPTool "Procmon" -Download -Source Internal  # fetch from internal source
 
-By default, downloads are placed in a "E:\SpToolBo" folder next to the module file. Override this location with the `-Destination` parameter.
+By default, downloads are placed in a "E:\SpToolbox\". Override this location with the `-Destination` parameter.
