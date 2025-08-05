@@ -141,7 +141,7 @@ function Get-SPTool {
     # Validate target drive exists before attempting downloads
     $driveRoot = Split-Path -Path $Destination -Qualifier
     if (-not (Test-Path $driveRoot)) {
-        Write-Host "Drive '$driveRoot' not found."
+        Write-Host "Drive '$driveRoot' not found." -ForegroundColor Yellow
         $available = (Get-PSDrive -PSProvider FileSystem).Name -join ', '
         Write-Host "Available drives: $available"
 
