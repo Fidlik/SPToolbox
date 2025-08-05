@@ -137,7 +137,7 @@ function Get-SPTool {
         [string] $Destination = 'E:\SpToolbox\'
     )
 
-    $startTime = Get-Date
+    
 
     # If just listing, skip drive/directory checks
     if ($PSCmdlet.ParameterSetName -eq 'List') {
@@ -181,7 +181,7 @@ function Get-SPTool {
             return
         }
     }
-
+    $startTime = Get-Date
     if ($DownloadAll) {
         foreach ($tool in $Tools) {
             $uri = if ($Source -eq 'Internal') { $tool.InternalUri } else { $tool.OfficialUri }
