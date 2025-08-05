@@ -152,7 +152,7 @@ function Get-SPTool {
         $maxAttempts = 3
         for ($i = 0; $i -lt $maxAttempts; $i++) {
             $prompt = "Enter the drive letter for the toolbox (use -Destination for a full path)"
-            $letter = Read-Host $prompt
+            $letter = (Read-Host $prompt).Trim().TrimEnd(':')
 
             if ($letter -notmatch '^[A-Za-z]$') {
                 Write-Host "Please enter a single drive letter (e.g. C or D)."
