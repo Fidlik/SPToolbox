@@ -9,7 +9,7 @@
 
 $Script:Tools = @(
     [PSCustomObject]@{
-        Name        = "Process Monitor"
+        Name        = "Process Monitor (Procmon)"
         Aliases     = @("Procmon")
         FileName    = "ProcessMonitor.zip"
 
@@ -18,7 +18,7 @@ $Script:Tools = @(
         Description = "Captures real-time file, registry and process/thread activity on SharePoint servers to pinpoint permission errors, missing DLLs or unexpected file I/O."
     }
     [PSCustomObject]@{
-        Name        = "ULS Viewer"
+        Name        = "ULS Viewer (Uls)"
         Aliases     = @("ULS")
         FileName    = "ULSViewer.zip"
         OfficialUri = "https://download.microsoft.com/download/f/1/7/f17e2780-9456-479a-8faa-803cebf74b6a/ulsviewer.zip"
@@ -33,22 +33,23 @@ $Script:Tools = @(
         Description = "Intercepts and inspects HTTP/S traffic between clients and your SharePoint Web Front Ends-ideal for debugging REST/OData calls, cookies, redirects and auth flows."
     }
     [PSCustomObject]@{
-        Name        = "Log Parser"
-        FileName    = "LogParser.msi"
+        Name        = "LogParser"
+        Aliases     = @("LogParser")
+        FileName    = "LogParser.msi
         OfficialUri = "https://download.microsoft.com/download/1/0/0/100b12a3-0f98-4af8-b63a-52a7de9d6cd3/LogParser.msi"
         InternalUri = "\\fileserver\Share\LogParser.msi"
         Description = "Run SQL-style queries against IIS, ULS and Usage logs to spot trends like most-hit pages, failing requests or slow response times."
     }
     [PSCustomObject]@{
-        Name        = "SQL Server Profiler"
-        Aliases     = @("SQL Profiler")
+        Name        = "SQL Server Profiler  (SqlProfiler)"
+        Aliases     = @("SqlProfiler")
         FileName    = "SQLProfiler.msi"
         OfficialUri = "https://download.microsoft.com/download/2/5/2/25233c1c-1f6b-4e77-bf1e-d875c9d9e1bc/SqlProfiler.msi"
         InternalUri = "\\fileserver\Share\SqlProfiler.msi"
         Description = "Traces T-SQL calls from SharePoint into your content databases-helpful when diagnosing locking, blocking or tracking down an expensive query."
     }
     [PSCustomObject]@{
-        Name        = "Performance Monitor"
+        Name        = "Performance Monitor (PerfMon)"
         Aliases     = @("PerfMon")
         FileName    = "PerfMon"
         OfficialUri = $null
@@ -56,7 +57,7 @@ $Script:Tools = @(
         Description = "Monitors Windows counters (CPU, memory, disk I/O) alongside SharePoint-specific counters to baseline and troubleshoot performance bottlenecks."
     }
     [PSCustomObject]@{
-        Name        = "Debug Diagnostic Tool"
+        Name        = "Debug Diagnostic Tool (DebugDiag)"
         Aliases     = @("DebugDiag")
         FileName    = "DebugDiag.msi"
         OfficialUri = "https://download.microsoft.com/download/b/0/0/b0031952-e4bb-4ae3-93c0-85e8cdff3a0c/DebugDiag.msi"
@@ -65,14 +66,14 @@ $Script:Tools = @(
     }
     [PSCustomObject]@{
         Name        = "SPDiag"
-        Aliases     = @("SPDiagnosticStudio")
+        Aliases     = @("SPDiag")
         FileName    = "SPDiagSetup.msi"
         OfficialUri = $null
         InternalUri = $null
         Description = "Microsoft's diagnostic framework for gathering configuration snapshots, ULS and PerfMon data, health reports and auto-analysis in one package."
     }
     [PSCustomObject]@{
-        Name        = "SharePoint Log Viewer"
+        Name        = "SharePoint Log Viewer (SPLogViewer)" 
         Aliases     = @("SPLogViewer")
         FileName    = "SPLogViewer.zip"
         OfficialUri = "https://download.microsoft.com/download/9/f/c/9fcd538e-d97c-4bb3-8ddb-8842f885f58e/SPLogViewer.zip"
@@ -80,7 +81,7 @@ $Script:Tools = @(
         Description = "Lightweight, SharePoint-focused log tail utility with built-in hyperlinking of correlation IDs to Active Directory info."
     }
     [PSCustomObject]@{
-        Name        = "SharePoint Manager"
+        Name        = "SharePoint Manager (SPM)"
         Aliases     = @("SPM")
         FileName    = "SPM.zip"
         OfficialUri = $null
@@ -88,7 +89,7 @@ $Script:Tools = @(
         Description = "Tree-view tool for browsing the entire SharePoint configuration database-including hidden properties on Service Applications, Web Applications, Sites and Features."
     }
     [PSCustomObject]@{
-        Name        = "PnP PowerShell"
+        Name        = "PnP PowerShell (PnP)"
         Aliases     = @("PnP")
         FileName    = "PnP.PowerShell.msi"
         OfficialUri = "https://github.com/pnp/powershell/releases/latest/download/PnP.PowerShell.msi"
@@ -103,7 +104,8 @@ $Script:Tools = @(
         Description = "Third-party GUI that inventories your farm: permissions reports, feature usage, storage metrics, impact analysis before updates and much more."
     }
     [PSCustomObject]@{
-        Name        = "SharePoint Health Analyzer"
+        Name        = "SharePoint Health Analyzer (SPHA)"
+        Aliases     = @("SPHA")
         FileName    = "HealthAnalyzer"
         OfficialUri = $null
         InternalUri = $null
@@ -111,7 +113,7 @@ $Script:Tools = @(
         Description = "Built-in farm-wide rule engine; export its reports and drill into them with ULS Viewer or SPDiag."
     }
     [PSCustomObject]@{
-        Name        = "Process Explorer"
+        Name        = "Process Explorer (ProcExp)"
         Aliases     = @("ProcExp")
         FileName    = "ProcessExplorer.zip"
         OfficialUri = "https://download.sysinternals.com/files/ProcessExplorer.zip"
@@ -119,7 +121,7 @@ $Script:Tools = @(
         Description = "Deep process and handle inspection including SharePoint worker processes such as w3wp.exe and OWSTIMER.EXE."
     }
     [PSCustomObject]@{
-        Name        = "Resource Monitor & Task Manager"
+        Name        = "Resource Monitor & Task Manager (Resmon)"
         Aliases     = @("Resmon")
         FileName    = "ResourceMonitor"
         OfficialUri = $null
