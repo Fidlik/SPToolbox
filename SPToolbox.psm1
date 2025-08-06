@@ -3,13 +3,14 @@
     Usage:
         Import-Module .\SPToolbox.psm1   # if saved as module
         Get-SPTool                       # list available tools
-        Get-SPTool -Name 'Procmon','ULS Viewer'    # download specific tools
+        Get-SPTool -Name 'Procmon','ULS','Fiddler'    # download specific tools
         Get-SPTool -DownloadAll                          # download everything
 #>
 
 $Script:Tools = @(
     [PSCustomObject]@{
-        Name        = "Process Monitor (Procmon)"
+        Name        = "Process Monitor"
+        Aliases     = @("Procmon")
         FileName    = "ProcessMonitor.zip"
 
         OfficialUri = "https://download.sysinternals.com/files/ProcessMonitor.zip"
@@ -18,6 +19,7 @@ $Script:Tools = @(
     }
     [PSCustomObject]@{
         Name        = "ULS Viewer"
+        Aliases     = @("ULS")
         FileName    = "ULSViewer.zip"
         OfficialUri = "https://download.microsoft.com/download/f/1/7/f17e2780-9456-479a-8faa-803cebf74b6a/ulsviewer.zip"
         InternalUri = "\\fileserver\Share\ULSViewer.zip"
@@ -39,6 +41,7 @@ $Script:Tools = @(
     }
     [PSCustomObject]@{
         Name        = "SQL Server Profiler"
+        Aliases     = @("SQL Profiler")
         FileName    = "SQLProfiler.msi"
         OfficialUri = "https://download.microsoft.com/download/2/5/2/25233c1c-1f6b-4e77-bf1e-d875c9d9e1bc/SqlProfiler.msi"
         InternalUri = "\\fileserver\Share\SqlProfiler.msi"
@@ -46,6 +49,7 @@ $Script:Tools = @(
     }
     [PSCustomObject]@{
         Name        = "Performance Monitor"
+        Aliases     = @("PerfMon")
         FileName    = "PerfMon"
         OfficialUri = $null
         InternalUri = $null
@@ -53,27 +57,31 @@ $Script:Tools = @(
     }
     [PSCustomObject]@{
         Name        = "Debug Diagnostic Tool"
+        Aliases     = @("DebugDiag")
         FileName    = "DebugDiag.msi"
         OfficialUri = "https://download.microsoft.com/download/b/0/0/b0031952-e4bb-4ae3-93c0-85e8cdff3a0c/DebugDiag.msi"
         InternalUri = "\\fileserver\Share\DebugDiag.msi"
         Description = "Captures and analyzes IIS/COM+/CLR crash dumps on your SharePoint servers, with SharePoint-specific rules for common exceptions."
     }
     [PSCustomObject]@{
-        Name        = "SPDiag (SPDiagnosticStudio)"
+        Name        = "SPDiag"
+        Aliases     = @("SPDiagnosticStudio")
         FileName    = "SPDiagSetup.msi"
         OfficialUri = $null
         InternalUri = $null
         Description = "Microsoft's diagnostic framework for gathering configuration snapshots, ULS and PerfMon data, health reports and auto-analysis in one package."
     }
     [PSCustomObject]@{
-        Name        = "SharePoint Log Viewer (SPLogViewer)"
+        Name        = "SharePoint Log Viewer"
+        Aliases     = @("SPLogViewer")
         FileName    = "SPLogViewer.zip"
         OfficialUri = "https://download.microsoft.com/download/9/f/c/9fcd538e-d97c-4bb3-8ddb-8842f885f58e/SPLogViewer.zip"
         InternalUri = "\\fileserver\Share\SPLogViewer.zip"
         Description = "Lightweight, SharePoint-focused log tail utility with built-in hyperlinking of correlation IDs to Active Directory info."
     }
     [PSCustomObject]@{
-        Name        = "SharePoint Manager (SPM)"
+        Name        = "SharePoint Manager"
+        Aliases     = @("SPM")
         FileName    = "SPM.zip"
         OfficialUri = $null
         InternalUri = $null
@@ -81,6 +89,7 @@ $Script:Tools = @(
     }
     [PSCustomObject]@{
         Name        = "PnP PowerShell"
+        Aliases     = @("PnP")
         FileName    = "PnP.PowerShell.msi"
         OfficialUri = "https://github.com/pnp/powershell/releases/latest/download/PnP.PowerShell.msi"
         InternalUri = "\\fileserver\Share\PnP.PowerShell.msi"
@@ -103,6 +112,7 @@ $Script:Tools = @(
     }
     [PSCustomObject]@{
         Name        = "Process Explorer"
+        Aliases     = @("ProcExp")
         FileName    = "ProcessExplorer.zip"
         OfficialUri = "https://download.sysinternals.com/files/ProcessExplorer.zip"
         InternalUri = "\\fileserver\Share\ProcessExplorer.zip"
@@ -110,6 +120,7 @@ $Script:Tools = @(
     }
     [PSCustomObject]@{
         Name        = "Resource Monitor & Task Manager"
+        Aliases     = @("Resmon")
         FileName    = "ResourceMonitor"
         OfficialUri = $null
         InternalUri = $null
@@ -141,7 +152,7 @@ function Get-SPTool {
 
     # If just listing, skip drive/directory checks
     if ($PSCmdlet.ParameterSetName -eq 'List') {
-        return $Tools | Select-Object Name, Description, OfficialUri, InternalUri
+        return $Tools | Select-Object @{Name='Name';Expression={ if ($_.Aliases) { '{0} ({1})' -f $_.Name, ($_.Aliases -join ', ') } else { $_.Name } }}, Description, OfficialUri, InternalUri
     }
 
     # Validate target drive exists before attempting downloads
@@ -216,7 +227,10 @@ function Get-SPTool {
 
     # Download specific tools
     foreach ($toolName in $Name) {
-        $tool = $Tools | Where-Object { $_.Name -like "*$toolName*" }
+        $tool = $Tools | Where-Object {
+            $_.Name -like "*$toolName*" -or
+            ($_.Aliases -and ($_.Aliases | Where-Object { $_ -like "*$toolName*" }).Count -gt 0)
+        }
         if (-not $tool) {
             Write-Error "Tool '$toolName' not found."
             continue
