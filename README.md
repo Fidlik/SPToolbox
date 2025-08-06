@@ -5,6 +5,7 @@ A personal collection of PowerShell scripts, admin utilities, and automation sni
 ## PowerShell Module
 
 `SPToolbox.psm1` exposes a simple `Get-SPTool` function for listing or downloading common diagnostic utilities.
+Many tools include short aliases for quicker access (e.g., `"Procmon"` for `Process Monitor`).
 
 ```powershell
 # 1. Set execution policy for the current session only
@@ -30,7 +31,7 @@ Import-Module $destination -Force
 
 Get-SPTool               # list tools with descriptions
 
-Get-SPTool -Name 'Procmon','ULS Viewer'                # download specific tools
+Get-SPTool -Name 'Procmon','ULS','Fiddler'             # download specific tools
 Get-SPTool -DownloadAll -Source Official               # fetch everything from official sources
 Get-SPTool -Name 'Procmon' -Source Internal            # fetch from internal source
 
